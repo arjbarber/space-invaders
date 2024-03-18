@@ -3,6 +3,7 @@ import config
 import sys
 import os
 pygame.init()
+pygame.mixer.init()
 
 WIN = pygame.display.set_mode((config.WIDTH,config.HEIGHT))
 SPACESHIP = pygame.transform.scale(pygame.image.load(
@@ -11,6 +12,7 @@ SPACESHIP = pygame.transform.scale(pygame.image.load(
 BACKGROUND = pygame.transform.rotate(pygame.transform.scale(pygame.image.load(
                     os.path.join('Assets', 'space.png')), (config.HEIGHT,config.WIDTH)), 90
 )
+BULLET_SOUND = pygame.mixer.Sound(os.path.join('Assets','Gun+Silencer.mp3'))
 
 def draw_screen(player,player_bullets):
     WIN.fill(config.WIN_COLOR)
@@ -51,6 +53,7 @@ def main():
                 if(event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_SPACE) and len(player_bullets) < config.MAX_BULLETS:
                     bullet = pygame.Rect(player.x + player.width/2, player.y, config.BULLET_WIDTH, config.BULLET_HEIGHT)
                     player_bullets.append(bullet)
+                    BULLET_SOUND.play()
         
 
         keys_pressed = pygame.key.get_pressed()
